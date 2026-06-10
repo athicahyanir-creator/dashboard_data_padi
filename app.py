@@ -23,8 +23,8 @@ st.markdown("""
         background-color: #1a4d2e;
         color: white;
     }
-    section[data-testid="stSidebar"] .css-17lntkn {
-        color: white;
+    section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] span, section[data-testid="stSidebar"] div {
+        color: white !important;
     }
     
     /* KPI Metric Cards */
