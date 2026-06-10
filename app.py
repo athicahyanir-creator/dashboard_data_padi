@@ -73,7 +73,7 @@ def load_data():
         df_excel.rename(columns={'Kabupten/kota': 'Kabupaten', 'Tahunan': 'Produksi_Ton'}, inplace=True)
         # Remove 'Kabupaten ' or 'Kota ' from the names for cleaner display
         df_excel['Kabupaten'] = df_excel['Kabupaten'].astype(str).str.replace('Kabupaten ', '').str.replace('Kota ', '')
-        df = df_excel[['Kabupaten', 'Produksi_Ton']].dropna()
+        df = df_excel[['Kabupaten', 'Produksi_Ton', 'Tahun']].dropna()
         n_samples = len(df)
         
         # Generate mock data for missing features to make the dashboard complete
@@ -142,7 +142,8 @@ with main_col:
     
     col1, col2, col3, col4, col5, col6 = st.columns(6)
     with col1: st.selectbox("Kabupaten/Kota", ["Semua"] + list(df['Kabupaten'].unique()))
-    with col2: st.selectbox("Tahun", ["2024", "2023"])
+    tahun_options = sorted([str(int(t)) for t in df['Tahun'].unique()], reverse=True) if 'Tahun' in df.columns else ["2024", "2023"]
+    with col2: st.selectbox("Tahun", ["Semua"] + tahun_options)
     with col3: st.selectbox("Kategori Produktivitas", ["Semua", "Tinggi", "Sedang", "Rendah"])
     with col4: st.selectbox("Luas Lahan (Ha)", ["Semua", "> 1000", "< 1000"])
     with col5: st.selectbox("Curah Hujan (mm)", ["Semua", "> 2000", "< 2000"])
