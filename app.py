@@ -81,8 +81,8 @@ def load_data():
         n_samples = len(df)
         
         # Generate mock data for missing features to make the dashboard complete
-        # Luas lahan dibuat proporsional dengan produksi (asumsi produktivitas 4.5 - 6.5 ton/ha)
-        df['Luas_Lahan_Ha'] = df['Produksi_Ton'] / np.random.uniform(4.5, 6.5, n_samples)
+        # Luas lahan dibuat proporsional dengan produksi (asumsi produktivitas bervariasi 3.0 - 8.0 ton/ha)
+        df['Luas_Lahan_Ha'] = df['Produksi_Ton'] / np.random.uniform(3.0, 8.0, n_samples)
         df['Curah_Hujan_mm'] = np.random.uniform(1000, 3000, n_samples)
         df['Penggunaan_Pupuk_kg'] = df['Luas_Lahan_Ha'] * np.random.uniform(200, 300, n_samples)
         
