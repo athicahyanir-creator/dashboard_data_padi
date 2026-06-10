@@ -191,7 +191,7 @@ with main_col:
         
     with r2c2:
         st.markdown("##### Scatter Plot: Luas Lahan vs Produksi")
-        fig_scatter = px.scatter(df, x='Luas_Lahan_Ha', y='Produksi_Ton', color_discrete_sequence=['#4caf50'], opacity=0.6, trendline="ols")
+        fig_scatter = px.scatter(df, x='Luas_Lahan_Ha', y='Produksi_Ton', color_discrete_sequence=['#4caf50'], opacity=0.6)
         fig_scatter.update_layout(margin=dict(t=0, b=0, l=0, r=0), height=300)
         st.plotly_chart(fig_scatter, use_container_width=True)
         
