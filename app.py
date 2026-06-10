@@ -73,13 +73,18 @@ def load_data():
         df_excel.rename(columns={'Kabupten/kota': 'Kabupaten', 'Tahunan': 'Produksi_Ton'}, inplace=True)
         # Remove 'Kabupaten ' or 'Kota ' from the names for cleaner display
         df_excel['Kabupaten'] = df_excel['Kabupaten'].astype(str).str.replace('Kabupaten ', '').str.replace('Kota ', '')
+        
+        # Hapus baris total 'Jawa Timur' agar tidak merusak rata-rata (outlier)
+        df_excel = df_excel[~df_excel['Kabupaten'].str.contains('Jawa Timur', case=False, na=False)]
+        
         df = df_excel[['Kabupaten', 'Produksi_Ton', 'Tahun']].dropna()
         n_samples = len(df)
         
         # Generate mock data for missing features to make the dashboard complete
-        df['Luas_Lahan_Ha'] = np.random.uniform(500, 20000, n_samples)
+        # Luas lahan dibuat proporsional dengan produksi (asumsi produktivitas 4.5 - 6.5 ton/ha)
+        df['Luas_Lahan_Ha'] = df['Produksi_Ton'] / np.random.uniform(4.5, 6.5, n_samples)
         df['Curah_Hujan_mm'] = np.random.uniform(1000, 3000, n_samples)
-        df['Penggunaan_Pupuk_kg'] = np.random.uniform(100, 500, n_samples)
+        df['Penggunaan_Pupuk_kg'] = df['Luas_Lahan_Ha'] * np.random.uniform(200, 300, n_samples)
         
         # Re-calculate Productivity
         df['Produktivitas_Ton_Ha'] = df['Produksi_Ton'] / df['Luas_Lahan_Ha']
